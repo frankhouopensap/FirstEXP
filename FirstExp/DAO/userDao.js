@@ -1,45 +1,24 @@
 const dbConn = require('../DB/dbConn');
-const getUserByIdDAO = async ( userId ) => {
-    console.log(`Start querying with userId:${userId}`);
-    return dbConn.dbPool.query('select * from userinfo where id = $1', [userId] );
+const getUserByIdDAO = async (userId) => {
+    return dbConn.dbPool.query('select * from userinfo where id = $1', [userId]);
 }
 //Create a new user
-const addUserDAO = (userInfo) => {
-
-    dbConn.dbPool.query('insert into userinfo (name,age,password) values (userInfo.name,userInfo.age,userInfo.password)',
-                         [name, age, password], (error, result) => {
-        if (error) {
-            throw error;
-        }
-        response.status(201).send('User'+ result.insertId + ' is created successfully');
-    })
-}    
+const addUserDAO = async (userInfo) => {
+    return dbConn.dbPool.query('insert into userinfo (name,age,password) values ($1,$2,$3)',
+        [userInfo.name, userInfo.age, userInfo.password])
+}
 // Delete a user
-const delUserByNameDAO = (request,response) =>{
-    const name = request.params.name;
-    console.log('Deleting user:'+ name);
-    dbConn.dbPool.query('delete from userinfo where name = $1', [name], (error, result) => {
-        if(error){
-            throw error;
+const delUserByNameDAO = (username) => {
+    dbConn.dbPool.query('delete from userinfo where name = $1', [username], (error, result) => {
+        if (error) {
+            throw error
         }
-        response.status(200).send('User:'+ name +' is deleted');
     })
 }
 
 //Update a users
-const uptUserByNameDAO = (request,response) => {
-    const name = request.params.name;
-    console.log(name);
-    const { age, password } = request.body;
-    console.log(age);
-    console.log(password);
-    console.log('Start updating user:'+name);
-    dbConn.dbPool.query('update userinfo set age = $1, password = $2 where name = $3', [age,password,name], (error,result) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).send('User modified with name:' + name);
-    })
+const uptUserByNameDAO = async (username,userinfo) => {
+    return dbConn.dbPool.query('update userinfo set age = $1, password = $2 where name = $3', [userinfo.age, userinfo.password, username])
 }
 
 module.exports = {
