@@ -28,7 +28,7 @@ const uptUserByNameServ = async (request,response) =>{
     console.log(`Start updating user:${username}`);
     const userInfo = request.body
     const userData = await userDAO.uptUserByNameDAO(username,userInfo)
-    response.status(200).send(`User modified with name:${userData.rows}`);
+    response.status(200).send(`User modified with name:${username}`);
 }
 
 module.exports = {
@@ -37,14 +37,3 @@ module.exports = {
     delUserByNameServ,
     uptUserByNameServ
 }
-
-// const addUserServ = async(request,response) => {
-//     const userId = request.params.id;
-//     await userDAO.getUserById( id );
-// } 
-
-// router.get('/:id', userDAO.getUserById);
-// router.post('/', userDAO.addUser);
-// router.delete('/:name', userDAO.delUser) ;
-// router.put('/:name', userDAO.updateUserByName) ;
-// module.exports = router;

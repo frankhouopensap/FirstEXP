@@ -1,4 +1,5 @@
 const dbConn = require('../DB/dbConn');
+
 const getUserByIdDAO = async (userId) => {
     return dbConn.dbPool.query('select * from userinfo where id = $1', [userId]);
 }
@@ -27,25 +28,3 @@ module.exports = {
     delUserByNameDAO,
     uptUserByNameDAO
 }
-// module.exports = function(app){
-// //Get a user by userId
-//     app.get('/userInfo/', function(req,res,next)
-//     {
-//         console.dir(req.query.username);
-//         dbConn.dbPool.query('select * from userinfo where  name= $1', [req.query.username],  (error,result) => {
-//             if (error){
-//                 throw error;
-//             }
-//         res.status(200).json(result.rows);
-//         } )
-
-//     });
-// //Create a new user
-//     app.post('/userHandle', function(req,res){
-
-//     });
-
-// //     app.delete('/userHandle', function(req,res){
-
-// //     });
-// }
